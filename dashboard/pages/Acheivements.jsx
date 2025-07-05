@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Plus, X, Edit, Trash2, Star } from "lucide-react";
+
 const BASE_URL = import.meta.env.VITE_SERVER_URL
+
 const AcheivementsDashboard = () => {
   const [acheivements, setAcheivements] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -106,7 +108,7 @@ const AcheivementsDashboard = () => {
 
       const url = editingAcheivement
         ? `${BASE_URL}/api/v1/acheivements/${editingAcheivement._id}`
-        : "${BASE_URL}/api/v1/acheivements";
+        : `${BASE_URL}/api/v1/acheivements`;
 
       const method = editingAcheivement ? "PUT" : "POST";
 
