@@ -1,5 +1,8 @@
+
+
+
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "../../src/lib/api.js"; // adjust path if needed
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -27,6 +30,7 @@ const CompanyInfoDashboard = () => {
       },
     },
   });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -44,8 +48,8 @@ const CompanyInfoDashboard = () => {
   const fetchCompanyInfo = async () => {
     try {
       const [aboutRes, contactRes] = await Promise.all([
-        axios.get(`${BASE_URL}/api/v1/companyinfo/aboutus`),
-        axios.get(`${BASE_URL}/api/v1/companyinfo/contactus`),
+        api.get("/companyinfo/aboutus"),
+        api.get("/companyinfo/contactus"),
       ]);
 
       setCompanyInfo({
@@ -85,7 +89,7 @@ const CompanyInfoDashboard = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get("${BASE_URL}/api/v1/companyinfo/history");
+      const res = await api.get("/companyinfo/history");
       setHistory(res.data.data);
     } catch (err) {
       console.error("Error fetching history:", err);
@@ -197,7 +201,6 @@ const CompanyInfoDashboard = () => {
     try {
       const formData = new FormData();
 
-      // Add About Us data
       if (activeTab === "about") {
         formData.append("mission", companyInfo.aboutUs.mission);
         formData.append("vision", companyInfo.aboutUs.vision);
@@ -209,16 +212,13 @@ const CompanyInfoDashboard = () => {
         if (imageFile) {
           formData.append("image", imageFile);
         }
-      }
-      // Add Contact Info data
-      else {
-        // Inside handleSubmit()
+      } else {
         formData.append("email", companyInfo.contactInfo.email);
         formData.append(
           "emailAppPassword",
           companyInfo.contactInfo.emailAppPassword
-        ); // Add this
-        companyInfo.contactInfo.phoneNumbers.forEach((num, index) => {
+        );
+        companyInfo.contactInfo.phoneNumbers.forEach((num) => {
           formData.append("phoneNumbers", num);
         });
         formData.append(
@@ -239,10 +239,8 @@ const CompanyInfoDashboard = () => {
         );
       }
 
-      await axios.post("${BASE_URL}/api/v1/companyinfo", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await api.post("/companyinfo", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       fetchCompanyInfo();
@@ -259,27 +257,16 @@ const CompanyInfoDashboard = () => {
       try {
         const formData = new FormData();
 
-        // Restore About Us if it exists in history
         if (historyItem.aboutUs) {
           formData.append("mission", historyItem.aboutUs.mission);
           formData.append("vision", historyItem.aboutUs.vision);
           formData.append("title", historyItem.aboutUs.title);
-          formData.append(
-            "address",
-            historyItem.aboutUs.location?.address || ""
-          );
+          formData.append("address", historyItem.aboutUs.location?.address || "");
           formData.append("city", historyItem.aboutUs.location?.city || "");
-          formData.append(
-            "country",
-            historyItem.aboutUs.location?.country || ""
-          );
-          formData.append(
-            "timezone",
-            historyItem.aboutUs.location?.timezone || ""
-          );
+          formData.append("country", historyItem.aboutUs.location?.country || "");
+          formData.append("timezone", historyItem.aboutUs.location?.timezone || "");
         }
 
-        // Restore Contact Info if it exists in history
         if (historyItem.contactInfo) {
           formData.append("email", historyItem.contactInfo.email || "");
           (historyItem.contactInfo.phoneNumbers || [""]).forEach((num) => {
@@ -303,7 +290,7 @@ const CompanyInfoDashboard = () => {
           );
         }
 
-        await axios.post("${BASE_URL}/api/v1/companyinfo", formData);
+        await api.post("/companyinfo", formData);
 
         fetchCompanyInfo();
         fetchHistory();
@@ -317,7 +304,7 @@ const CompanyInfoDashboard = () => {
   const deleteHistoryItem = async (id) => {
     if (window.confirm("Are you sure you want to delete this history entry?")) {
       try {
-        await axios.delete(`${BASE_URL}/api/v1/companyinfo/history/${id}`);
+        await api.delete(`/companyinfo/history/${id}`);
         fetchHistory();
       } catch (err) {
         setError(err.message);
@@ -328,7 +315,6 @@ const CompanyInfoDashboard = () => {
   const toggleEditMode = () => {
     setEditMode(!editMode);
     if (!editMode) {
-      // Reset image selection when entering edit mode
       setImageFile(null);
       if (companyInfo.aboutUs.imageUrl) {
         setPreviewImage(`${BASE_URL}${companyInfo.aboutUs.imageUrl}`);
@@ -337,15 +323,12 @@ const CompanyInfoDashboard = () => {
   };
 
   if (loading)
-    return (
-      <div className="text-center py-8 text-stone-900">
-        Loading company information...
-      </div>
-    );
+    return <div className="text-center py-8 text-stone-900">Loading company information...</div>;
+
   if (error)
     return <div className="text-red-500 text-center py-8">Error: {error}</div>;
 
-  return (
+  return(
     <div className="w-full h-full bg-stone-900/95 flex backdrop-blur-sm">
       <div className="container mx-auto px-4 py-8 gap-15 bg-[#FBFFF1] min-h-screen pt-8 my-10 rounded-md">
         <a href="/admin">
@@ -915,7 +898,7 @@ const CompanyInfoDashboard = () => {
         )}
       </div>
     </div>
-  );
+  )
 };
 
 export default CompanyInfoDashboard;

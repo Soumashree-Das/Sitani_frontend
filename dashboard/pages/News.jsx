@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Eye, EyeOff, Plus, Edit, Trash2 } from "lucide-react";
-const BASE_URL = import.meta.env.VITE_SERVER_URL
+import { api } from "../../src/lib/api.js"; // adjust path if needed
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 const AnnouncementsDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,8 +22,8 @@ const AnnouncementsDashboard = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/v1/announcements/get`
+        const response = await api.get(
+          `/announcements/get`
         );
         setAnnouncements(response.data.data);
       } catch (error) {
@@ -58,21 +60,21 @@ const AnnouncementsDashboard = () => {
       let response;
       if (currentAnnouncement) {
         // Update existing announcement
-        response = await axios.put(
-          `${BASE_URL}/api/v1/announcements/update/${currentAnnouncement._id}`,
+        response = await api.put(
+          `/announcements/update/${currentAnnouncement._id}`,
           payload
         );
       } else {
         // Create new announcement
-        response = await axios.post(
-          "${BASE_URL}/api/v1/announcements/create",
+        response = await api.post(
+          "/announcements/create",
           payload
         );
       }
 
       // Refresh announcements and close modal
-      const updatedResponse = await axios.get(
-        "${BASE_URL}/api/v1/announcements/get"
+      const updatedResponse = await api.get(
+        "/announcements/get"
       );
       setAnnouncements(updatedResponse.data.data);
       setIsModalOpen(false);
@@ -115,11 +117,11 @@ const AnnouncementsDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this announcement?")) {
       try {
-        await axios.delete(
-          `${BASE_URL}/api/v1/announcements/delete/${id}`
+        await api.delete(
+          `/announcements/delete/${id}`
         );
-        const response = await axios.get(
-          "${BASE_URL}/api/v1/announcements/get"
+        const response = await api.get(
+          "/announcements/get"
         );
         setAnnouncements(response.data.data);
       } catch (error) {
