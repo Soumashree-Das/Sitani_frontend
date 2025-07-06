@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import AcheivementCard from './AcheivementCard.jsx';
 import construction1 from "../assets/construction1.webp"
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL
+
 const AllAcheivements = () => {
   const [acheivements, setAcheivements] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const AllAcheivements = () => {
   useEffect(() => {
     const fetchAllAcheivements = async () => {
       try {
-        const response = await fetch('http://localhost:8090/api/v1/acheivements');
+        const response = await fetch(`${BASE_URL}/api/v1/acheivements`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

@@ -10,7 +10,7 @@
 //     const checkAuth = async () => {
 //       try {
 //         // Verify the user's authentication status
-//         const response = await axios.get('http://localhost:8090/api/v1/auth/verify', {
+//         const response = await axios.get('http://localhost:8000/api/v1/auth/verify', {
 //           withCredentials: true
 //         });
 //         setIsAuthenticated(response.data.isAuthenticated);
@@ -40,6 +40,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LeftSideNavbar from '../../dashboard/components/LeftSideNavbar';
+const BASE_URL = import.meta.env.VITE_SERVER_URL
 
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,7 +50,7 @@ const ProtectedRoute = () => {
     const verifyAuth = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:8090/api/v1/auth/verify', 
+          `${BASE_URL}/api/v1/auth/verify`, 
           { withCredentials: true }
         );
         setIsAuthenticated(response.data.isAuthenticated);

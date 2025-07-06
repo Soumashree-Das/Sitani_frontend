@@ -6,6 +6,7 @@ import { Lock, LayoutDashboard } from "lucide-react";
 import axios from "axios";
 import LogoutButton from "../../dashboard/components/LogoutButton";
 import footer_bg from "../assets/footer_bg.avif"
+const BASE_URL = import.meta.env.VITE_SERVER_URL
 
 function Footer() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Footer() {
     const checkAuth = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8090/api/v1/auth/verify",
+          `${BASE_URL}/api/v1/auth/verify`,
           {
             withCredentials: true,
           }
