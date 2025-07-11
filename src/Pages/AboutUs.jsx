@@ -1,7 +1,6 @@
 // import React, { useState, useEffect, useRef } from "react";
 // import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 // import { Link, useNavigate } from "react-router-dom";
-
 // import projectVideo1 from "../assets/project-1751351933840-532642380.mp4";
 // import constructionImage3 from "../assets/constrcution3.jpg";
 // import Footer from "../Components/Footer";

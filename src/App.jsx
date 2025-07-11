@@ -31,7 +31,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/news" element={<AnnouncementPage />} />
-        <Route path="/login" element={<LoginPage />} /> {/* Add login route */}
+        <Route path="/MP_sitani_and_sons_dashboard/admin/login" element={<LoginPage />} /> {/* Add login route */}
         <Route path="/achievements/all" element={<AllAcheivements />} /> {/* Add login route */}
 
         {/* Protected admin routes */}

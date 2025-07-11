@@ -17,27 +17,28 @@ import constructionImage3 from "../assets/constrcution3.jpg";
 import constructionImage2 from "../assets/constrcution2.jpg";
 import constructionImage1 from "../assets/construction1.webp";
 
-const BASE_URL = import.meta.env.VITE_SERVER_URL
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-
+  const currentYear = new Date().getFullYear();
+  const foundingYear = 1963;
+  const yearsOfExperience = currentYear - foundingYear;
   const slides = [
     {
       title: "We Have Been Building",
       subtitle: "EXCELLENCE",
-      tagline: "* SINCE 1985 *",
-      description:
-        "Premium construction services with over 35 years of experience",
-      backgroundImage: `url(${constructionImage1})`
+      tagline: "* SINCE 1963 *",
+      description: `Premium construction services with over ${yearsOfExperience} years of experience`,
+      backgroundImage: `url(${constructionImage1})`,
     },
     {
       title: "Creating Your Dream",
       subtitle: "PROJECTS",
       tagline: "* TRUSTED BUILDERS *",
       description: "From residential homes to commercial complexes",
-      backgroundImage: `url(${constructionImage2})`
+      backgroundImage: `url(${constructionImage2})`,
     },
     {
       title: "Quality & Innovation",
@@ -45,7 +46,7 @@ const Home = () => {
       tagline: "* AWARD WINNING *",
       description:
         "Delivering exceptional results with cutting-edge techniques",
-      backgroundImage: `url(${constructionImage3})`
+      backgroundImage: `url(${constructionImage3})`,
     },
   ];
 
@@ -116,13 +117,13 @@ const Home = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link 
+                <Link
                   to="/contact-us"
                   className="bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold py-4 px-8 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg inline-block text-center"
                 >
                   Contact Us
                 </Link>
-                <Link 
+                <Link
                   to="/projects"
                   className="border-2 border-white hover:bg-white hover:text-stone-900 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 inline-block text-center"
                 >
@@ -163,10 +164,6 @@ const Home = () => {
           ))}
         </div>
       </section>
-
-      
-
-  
     </div>
   );
 };

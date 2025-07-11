@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from "react";
 import { api } from "../../src/lib/api.js"; // adjust path if needed
 
@@ -261,10 +258,19 @@ const CompanyInfoDashboard = () => {
           formData.append("mission", historyItem.aboutUs.mission);
           formData.append("vision", historyItem.aboutUs.vision);
           formData.append("title", historyItem.aboutUs.title);
-          formData.append("address", historyItem.aboutUs.location?.address || "");
+          formData.append(
+            "address",
+            historyItem.aboutUs.location?.address || ""
+          );
           formData.append("city", historyItem.aboutUs.location?.city || "");
-          formData.append("country", historyItem.aboutUs.location?.country || "");
-          formData.append("timezone", historyItem.aboutUs.location?.timezone || "");
+          formData.append(
+            "country",
+            historyItem.aboutUs.location?.country || ""
+          );
+          formData.append(
+            "timezone",
+            historyItem.aboutUs.location?.timezone || ""
+          );
         }
 
         if (historyItem.contactInfo) {
@@ -323,12 +329,16 @@ const CompanyInfoDashboard = () => {
   };
 
   if (loading)
-    return <div className="text-center py-8 text-stone-900">Loading company information...</div>;
+    return (
+      <div className="text-center py-8 text-stone-900">
+        Loading company information...
+      </div>
+    );
 
   if (error)
     return <div className="text-red-500 text-center py-8">Error: {error}</div>;
 
-  return(
+  return (
     <div className="w-full h-full bg-stone-900/95 flex backdrop-blur-sm">
       <div className="container mx-auto px-4 py-8 gap-15 bg-[#FBFFF1] min-h-screen pt-8 my-10 rounded-md">
         <a href="/admin">
@@ -340,6 +350,16 @@ const CompanyInfoDashboard = () => {
           <h1 className="text-3xl font-bold text-stone-900">
             Company Information Dashboard
           </h1>
+          <div className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-lg max-w-3xl mx-auto my-4"></div>
+
+          <p className="text-sm text-red-500 leading-relaxed max-w-3xl mx-12">
+            <strong>Note:</strong> Always re-upload the{" "}
+            <strong>App Password</strong> whenever contact info is updated —
+            even if the email stays the same. After any update, test the contact
+            form using a personal email. If emails don’t send, upload the{" "}
+            <strong>App Password</strong> again.
+          </p>
+
           <div className="flex gap-2">
             <button
               onClick={toggleEditMode}
@@ -898,7 +918,7 @@ const CompanyInfoDashboard = () => {
         )}
       </div>
     </div>
-  )
+  );
 };
 
 export default CompanyInfoDashboard;

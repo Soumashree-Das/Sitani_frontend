@@ -15,7 +15,7 @@ const Navbar = () => {
               <Hammer className="w-6 h-6 text-stone-900" />
             </div>
             <h1 className="text-2xl font-bold tracking-wide text-white">
-              BUILDCRAFT
+              MP SITANI AND SONS
             </h1>
           </div>
 

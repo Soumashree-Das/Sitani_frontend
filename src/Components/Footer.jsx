@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock, LayoutDashboard } from "lucide-react";
@@ -63,15 +61,7 @@ function Footer() {
                 </button>
                 <LogoutButton className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold" />
               </div>
-            ) : (
-              <button
-                onClick={() => navigate("/login")}
-                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg border border-white/30 transition-colors duration-300"
-              >
-                <Lock className="w-4 h-4" />
-                Admin Login
-              </button>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
