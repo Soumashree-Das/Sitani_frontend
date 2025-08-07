@@ -215,7 +215,7 @@
 //             <h2 className="text-amber-600 text-lg font-medium tracking-wider uppercase mb-4">
 //               ABOUT US
 //             </h2>
-            
+
 //           </div> */}
 //           <div className="text-center mb-16">
 //             <div className="w-16 h-px bg-amber-500 mx-auto mb-4"></div>
@@ -577,7 +577,6 @@
 
 // export default AboutUs;
 
-
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -700,7 +699,30 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-[#FBFFF1]">
       {/* hero video */}
-      <div className="relative h-screen w-full overflow-hidden">
+      {/* <div className="relative mt-16 w-full overflow-hidden">
+        <video
+          ref={(el) => (videoRefs.current[0] = el)}
+          src={projectVideo1}
+          autoPlay
+          muted={isMuted}
+          loop
+          playsInline
+          preload="auto"
+          className="h-full w-full object-contain"
+        />
+        <button
+          onClick={() => setIsMuted((m) => !m)}
+          className="absolute bottom-6 right-6 rounded-full bg-white/20 p-3 backdrop-blur-sm transition hover:bg-white/30"
+        >
+          {isMuted ? (
+            <VolumeX className="h-6 w-6 text-amber-500" />
+          ) : (
+            <Volume2 className="h-6 w-6 text-amber-500" />
+          )}
+        </button>
+      </div>
+       */}
+      <div className="relative w-full overflow-hidden md:mt-16">
         <video
           ref={(el) => (videoRefs.current[0] = el)}
           src={projectVideo1}
@@ -818,7 +840,8 @@ const AboutUs = () => {
                   <p>
                     To become the world's most trusted construction company by
                     consistently delivering quality, fostering community
-                    connections, and inspiring architectural excellence globally.
+                    connections, and inspiring architectural excellence
+                    globally.
                   </p>
                 )}
               </div>
@@ -1030,7 +1053,9 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <Footer />
+      <div className="hidden lg:block">
+        <Footer />
+      </div>
     </div>
   );
 };

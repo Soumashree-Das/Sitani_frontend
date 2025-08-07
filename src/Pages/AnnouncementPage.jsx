@@ -88,25 +88,25 @@ const AnnouncementPage = () => {
 
   return (
     <>
-      <div className="min-h-screen" style={{ backgroundColor: "#FBFFF1" }}>
+      <div className="min-h-screen overflow-x-hidden bg-[#FBFFF1] md:mt-16">
         {/* Hero Section */}
         <div
-          className="relative h-96 bg-cover bg-center bg-no-repeat"
+          className="relative h-96 bg-cover bg-center bg-no-repeat "
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <div className="absolute inset-0 bg-black/60"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
             <div className="space-y-6">
               <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold block text-orange-400 leading-tight">
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold block text-orange-400 leading-tight">
                   ANNOUNCEMENTS
                 </h1>
                 <div className="w-20 h-1 bg-orange-500 rounded-full" />
               </div>
-              <p className="text-xl text-gray-200 leading-relaxed max-w-lg">
+              <p className="text-base sm:text-lg text-gray-200 leading-relaxed max-w-md sm:max-w-lg mx-auto">
                 Building Excellence & Innovation
               </p>
-              <p className="text-gray-300 leading-relaxed max-w-lg">
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-md sm:max-w-lg mx-auto">
                 Stay updated with our latest construction projects, company
                 announcements, and industry developments that shape our
                 commitment to excellence.
@@ -127,75 +127,91 @@ const AnnouncementPage = () => {
         </div>
 
         {/* Content */}
-        <div className="container mx-auto px-6 py-16">
-          {/* Announcements Section */}
-          <div className="mb-16">
-            <div className="text-center mb-12">
-              <span className="text-amber-600 text-sm font-semibold tracking-wider uppercase">
-                Latest Updates
-              </span>
-              <h2 className="text-4xl font-bold text-stone-900 mt-2 mb-4">
-                Announcements
-              </h2>
-              <div className="w-24 h-1 bg-amber-500 mx-auto"></div>
-            </div>
-
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
-                <p className="text-stone-600 mt-4">Loading announcements...</p>
+        <div className="w-full min-h-screen bg-stone-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-12 lg:py-16">
+            {/* Announcements Section */}
+            <div className="mb-16">
+              <div className="text-center mb-8 sm:mb-12">
+                <span className="text-amber-600 text-sm font-semibold tracking-wider uppercase">
+                  Latest Updates
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-stone-900 mt-2 mb-4">
+                  Announcements
+                </h2>
+                <div className="w-24 h-1 bg-amber-500 mx-auto"></div>
               </div>
-            ) : (
-              <div className="grid gap-6 max-w-4xl mx-auto">
-                {announcements.map((announcement) => (
-                  <div
-                    key={announcement._id}
-                    className={`bg-white rounded-lg p-6 border-l-4 ${getPriorityColor(
-                      announcement.priority
-                    )} hover:bg-stone-50 transition-colors duration-300 shadow-md hover:shadow-lg`}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-xl font-semibold text-stone-900 pr-4">
-                        {announcement.title}
-                      </h3>
-                      <div className="flex items-center text-stone-600 text-sm whitespace-nowrap">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(announcement.publishDate)}
-                      </div>
-                    </div>
-                    <p className="text-stone-700 leading-relaxed mb-4">
-                      {announcement.content}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-stone-600 text-sm">
-                        <AlertCircle className="w-4 h-4 mr-1" />
-                        Priority:{" "}
-                        {announcement.priority === 1
-                          ? "High"
-                          : announcement.priority === 2
-                          ? "Medium"
-                          : "Low"}
-                      </div>
-                      {announcement.expiryDate && (
-                        <div className="flex items-center text-stone-600 text-sm">
-                          <Clock className="w-4 h-4 mr-1" />
-                          Expires: {formatDate(announcement.expiryDate)}
+
+              {loading ? (
+                <div className="text-center py-12">
+                  <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+                  <p className="text-stone-600 mt-4">
+                    Loading announcements...
+                  </p>
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 w-full">
+                  {announcements.map((announcement) => (
+                    <div
+                      key={announcement._id}
+                      className={`bg-white rounded-lg p-4 sm:p-6 border-l-4 ${getPriorityColor(
+                        announcement.priority
+                      )} hover:bg-stone-50 transition-colors duration-300 shadow-md hover:shadow-lg w-full`}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-2">
+                        <h3 className="text-lg sm:text-xl font-semibold text-stone-900 break-words flex-1">
+                          {announcement.title}
+                        </h3>
+                        <div className="flex items-center text-stone-600 text-sm flex-shrink-0">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          <span className="whitespace-nowrap">
+                            {formatDate(announcement.publishDate)}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                      </div>
 
-            {error && (
-              <div className="mt-6 text-center text-red-600">{error}</div>
-            )}
+                      <p className="text-stone-700 leading-relaxed mb-4 break-words text-sm sm:text-base">
+                        {announcement.content}
+                      </p>
+
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div className="flex items-center text-stone-600 text-sm">
+                          <AlertCircle className="w-4 h-4 mr-1 flex-shrink-0" />
+                          <span>
+                            Priority:{" "}
+                            {announcement.priority === 1
+                              ? "High"
+                              : announcement.priority === 2
+                              ? "Medium"
+                              : "Low"}
+                          </span>
+                        </div>
+                        {announcement.expiryDate && (
+                          <div className="flex items-center text-stone-600 text-sm">
+                            <Clock className="w-4 h-4 mr-1 flex-shrink-0" />
+                            <span className="whitespace-nowrap">
+                              Expires: {formatDate(announcement.expiryDate)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {error && (
+                <div className="mt-6 text-center text-red-600 px-4">
+                  {error}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      <Footer />
+      <div className="hidden lg:block">
+        <Footer />
+      </div>
     </>
   );
 };

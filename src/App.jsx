@@ -1,6 +1,6 @@
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Element } from "react-scroll";
 import Navbar from "./Components/Navbar.jsx";
 import Home from "./Pages/Home.jsx";
 import AboutUsPage from "./Pages/AboutUs.jsx";
@@ -14,25 +14,79 @@ import AchievementsDashboard from "../dashboard/pages/Acheivements.jsx";
 import CompanyInfoDashboard from "../dashboard/pages/CompanyInfo.jsx";
 import AnnouncementsDashboard from "../dashboard/pages/News.jsx";
 import Dashboard_home from "../dashboard/pages/Dashboard_home.jsx";
-import LoginPage from "./Pages/LoginPage.jsx"; // Add this import
-import ProtectedRoute from "./auth/ProtectedRoute.jsx"; // Add this import
+import LoginPage from "./Pages/LoginPage.jsx";
+import ProtectedRoute from "./auth/ProtectedRoute.jsx";
 import AllAcheivements from "./Components/AllAcheivements.jsx";
 
+// Mobile scroll-based home page component - only includes scrollable sections
+const MobileScrollHomePage = () => {
+  return (
+    <div>
+      {/* Home Section */}
+      <Element name="home" id="home">
+        <Home />
+      </Element>
+
+      {/* About Section */}
+      <Element name="about" id="about">
+        <AboutUsPage />
+      </Element>
+
+      {/* Announcements Section */}
+      <Element name="news" id="news">
+        <AnnouncementPage />
+      </Element>
+
+      {/* Contact Section */}
+      <Element name="contact-us" id="contact-us">
+        <ContactUs />
+      </Element>
+    </div>
+  );
+};
+
+// Component to detect screen size and render accordingly
+const ResponsiveHomePage = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // For mobile, render scroll-based layout (without Services and Projects)
+  if (isMobile) {
+    return <MobileScrollHomePage />;
+  }
+  
+  // For desktop, render normal Home component
+  return <Home />;
+};
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        {/* Public site */}
-        <Route path="/" element={<Home />} />
+        {/* Home route - responsive behavior */}
+        <Route path="/" element={<ResponsiveHomePage />} />
+        
+        {/* Individual pages - always separate routes */}
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/services" element={<Services />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/news" element={<AnnouncementPage />} />
-        <Route path="/MP_sitani_and_sons_dashboard/admin/login" element={<LoginPage />} /> {/* Add login route */}
-        <Route path="/achievements/all" element={<AllAcheivements />} /> {/* Add login route */}
+        
+        {/* Other routes */}
+        <Route path="/MP_sitani_and_sons_dashboard/admin/login" element={<LoginPage />} />
+        <Route path="/achievements/all" element={<AllAcheivements />} />
 
         {/* Protected admin routes */}
         <Route element={<ProtectedRoute />}>

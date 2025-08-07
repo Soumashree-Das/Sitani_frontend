@@ -473,7 +473,7 @@ const ContactUs = () => {
 
   /* ───────────────────  render  ─────────────────── */
   return (
-    <div className="min-h-screen mt-12" style={{ backgroundColor: "#FBFFF1" }}>
+    <div className="min-h-screen md:mt-12" style={{ backgroundColor: "#FBFFF1" }}>
       {/* hero banner */}
       <div
         className="relative bg-stone-900 text-white bg-cover bg-center bg-no-repeat py-16 px-4"
