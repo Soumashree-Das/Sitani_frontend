@@ -699,29 +699,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-[#FBFFF1]">
       {/* hero video */}
-      {/* <div className="relative mt-16 w-full overflow-hidden">
-        <video
-          ref={(el) => (videoRefs.current[0] = el)}
-          src={projectVideo1}
-          autoPlay
-          muted={isMuted}
-          loop
-          playsInline
-          preload="auto"
-          className="h-full w-full object-contain"
-        />
-        <button
-          onClick={() => setIsMuted((m) => !m)}
-          className="absolute bottom-6 right-6 rounded-full bg-white/20 p-3 backdrop-blur-sm transition hover:bg-white/30"
-        >
-          {isMuted ? (
-            <VolumeX className="h-6 w-6 text-amber-500" />
-          ) : (
-            <Volume2 className="h-6 w-6 text-amber-500" />
-          )}
-        </button>
-      </div>
-       */}
+
       <div className="relative w-full overflow-hidden md:mt-16">
         <video
           ref={(el) => (videoRefs.current[0] = el)}
@@ -961,18 +939,13 @@ const AboutUs = () => {
               </div>
 
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {achievements.map((ach, idx) => (
+                {achievements
+                .slice(0, window.innerWidth < 768 ? 3 : achievements.length)
+                .map((ach, idx) => (
                   <div
                     key={ach.id || idx}
                     className="group overflow-hidden rounded-lg border border-stone-200 bg-white shadow-lg transition-shadow hover:shadow-xl"
                   >
-                    <div className="relative h-48 overflow-hidden bg-gradient-to-br from-stone-100 to-stone-200">
-                      {ach.category && (
-                        <span className="absolute top-4 left-4 rounded-full bg-amber-500 px-3 py-1 text-sm font-medium capitalize text-stone-900">
-                          {ach.category.replace(/"/g, "")}
-                        </span>
-                      )}
-                    </div>
                     <div className="p-6">
                       <h4 className="mb-3 line-clamp-2 text-xl font-bold text-stone-800">
                         {ach.title ? ach.title.replace(/"/g, "") : "Untitled"}
